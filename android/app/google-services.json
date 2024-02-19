@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "285824147268",
+    "project_id": "saarthi-728ba",
+    "storage_bucket": "saarthi-728ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285824147268:android:8008fbf9e7df3c7a48c111",
+        "android_client_info": {
+          "package_name": "com.example.saarthi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzDEOHqR4Ut7ZlIvby9ycJn6dIQeaIS-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
