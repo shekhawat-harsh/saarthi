@@ -1,8 +1,6 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-
+import 'package:sarthi/features/landing_page/screen/landing_page.dart';
 
 class FirebaseServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -41,8 +39,8 @@ class FirebaseServices {
   Future<String> logOut(BuildContext context) async {
     try {
       await _auth.signOut().then((value) {
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (_) => const SignUp()));
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (_) => LandingPage()), (route) => false);
       });
 
       return "Success";

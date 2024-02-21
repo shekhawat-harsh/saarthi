@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sarthi/services/firebase_services.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -8,6 +9,16 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile Page'),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await FirebaseServices().logOut(context);
+              },
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.black,
+              ))
+        ],
       ),
       body: const Center(
         child: Column(
