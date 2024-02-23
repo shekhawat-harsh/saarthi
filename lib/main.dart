@@ -2,9 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sarthi/features/landing/screen/landing_page.dart';
-import 'package:sarthi/features/profile/screen/profile_page.dart';
-import 'package:sarthi/features/record/screen/privious_record_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sarthi/features/live/screen/live_page.dart';
 import 'package:sarthi/features/verify_email/verify_email_screen.dart';
 import 'package:sarthi/firebase_options.dart';
 
@@ -15,7 +14,6 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
 
-  runApp(const MaterialApp(home: PriviousRecord()));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -35,29 +33,31 @@ void main() async {
       ),
     );
   };
-  runApp(MaterialApp(
-      home: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return const Center(
-                child: Text("Something went wrong !!!"),
-              );
-            } else if (snapshot.hasData) {
-              bool isemailVerified =
-                  FirebaseAuth.instance.currentUser!.emailVerified;
+  runApp(ProviderScope(
+    child: MaterialApp(
+        home: StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return const Center(
+                  child: Text("Something went wrong !!!"),
+                );
+              } else if (snapshot.hasData) {
+                bool isemailVerified =
+                    FirebaseAuth.instance.currentUser!.emailVerified;
 
-              print(isemailVerified);
-              print(FirebaseAuth.instance.currentUser!.email);
+                print(isemailVerified);
+                print(FirebaseAuth.instance.currentUser!.email);
 
-              if (isemailVerified) {
-                return const ProfilePage();
-              } else {
-                return const VerifyEmail();
+                if (isemailVerified) {
+                  return const LivePage();
+                } else {
+                  return const VerifyEmail();
+                }
               }
-            }
-            return LandingPage();
-          })));
+              return const LivePage();
+            })),
+  ));
 }

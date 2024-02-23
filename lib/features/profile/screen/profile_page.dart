@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sarthi/core/user_data_provider.dart';
 import 'package:sarthi/services/firebase_services.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var userData = ref.read(userDataProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile Page'),
@@ -39,7 +43,7 @@ class ProfilePage extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16.0),
-            buildTextFieldWithIcon("Name", Icons.person, (value) {
+            buildTextFieldWithIcon(userData!["Name"], Icons.person, (value) {
               // Validation logic can be added here if needed
             }),
             const SizedBox(height: 16.0),
@@ -48,7 +52,8 @@ class ProfilePage extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16.0),
-            buildTextFieldWithIcon("Age", Icons.calendar_today, (value) {
+            buildTextFieldWithIcon(userData["Age"], Icons.calendar_today,
+                (value) {
               // Validation logic can be added here if needed
             }),
             const SizedBox(height: 16.0),
@@ -57,7 +62,8 @@ class ProfilePage extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16.0),
-            buildTextFieldWithIcon("Gender", Icons.person_outline, (value) {
+            buildTextFieldWithIcon(userData["Gender"], Icons.person_outline,
+                (value) {
               // Validation logic can be added here if needed
             }),
             const SizedBox(height: 16.0),
@@ -66,7 +72,7 @@ class ProfilePage extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16.0),
-            buildTextFieldWithIcon("Contact No", Icons.phone, (value) {
+            buildTextFieldWithIcon(userData["ContactNo"], Icons.phone, (value) {
               // Validation logic can be added here if needed
             }),
             const SizedBox(height: 16.0),
@@ -75,7 +81,8 @@ class ProfilePage extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16.0),
-            buildTextFieldWithIcon("Address", Icons.location_on, (value) {
+            buildTextFieldWithIcon(userData["Address"], Icons.location_on,
+                (value) {
               // Validation logic can be added here if needed
             }),
             const SizedBox(height: 32.0),

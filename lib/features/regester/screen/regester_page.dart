@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sarthi/core/user_data_provider.dart';
 import 'package:sarthi/features/profile/screen/profile_page.dart';
+import 'package:sarthi/services/firebase_services.dart';
 import 'package:sarthi/services/firestore_services.dart';
 
-class Register extends StatelessWidget {
+class Register extends ConsumerWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late String name;
   late String age;
   late String gender;
   late String contactNo;
   late String address;
+  final String email = FirebaseServices().getUserEmail()!;
   Register({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Register"),
@@ -71,20 +75,24 @@ class Register extends StatelessWidget {
                           context: context,
                           barrierDismissible: false,
                           builder: (context) {
-                            return PopScope(
+                            return const PopScope(
                               canPop: false,
                               child: Center(
                                 child: CircularProgressIndicator(),
                               ),
                             );
                           });
-                      await FirestoreServices()
-                          .addUsersData(name, age, gender, contactNo, address);
+
+                      await FirestoreServices().addUsersData(
+                          name, age, gender, contactNo, address, email);
+
+                      ref.read(userDataProvider.notifier).state =
+                          await FirestoreServices().getUserByEmail(email);
 
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ProfilePage()),
+                              builder: (context) => ProfilePage()),
                           (route) => false);
                     }
                   },

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sarthi/core/user_data_provider.dart';
 import 'package:sarthi/features/landing/forget_password.dart';
 import 'package:sarthi/features/profile/screen/profile_page.dart';
 import 'package:sarthi/features/signup/page/signup_page.dart';
 import 'package:sarthi/services/firebase_services.dart';
+import 'package:sarthi/services/firestore_services.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends ConsumerWidget {
   LandingPage({super.key});
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -30,8 +33,8 @@ class LandingPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 _buildTextField(
-                  controller: _usernameController,
-                  labelText: 'Username',
+                  controller: _emailController,
+                  labelText: 'Email',
                 ),
                 const SizedBox(height: 20),
                 _buildTextField(
@@ -60,10 +63,14 @@ class LandingPage extends StatelessWidget {
                             });
 
                         var res = await FirebaseServices().LogIn(
-                            _usernameController.text.trim(),
+                            _emailController.text.trim(),
                             _passwordController.text.trim(),
                             context);
                         if (res == "Success") {
+                          ref.read(userDataProvider.notifier).state =
+                              await FirestoreServices()
+                                  .getUserByEmail(_emailController.text.trim());
+
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
