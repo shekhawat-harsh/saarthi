@@ -7,37 +7,105 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Page'),
+        title: const Text("Profile"),
       ),
-      body: const Center(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/profile_picture.jpg'),
+            const SizedBox(
+              height: 16,
             ),
-            SizedBox(height: 20),
-            Text(
-              'Mukesh',
-              style: TextStyle(fontSize: 24),
+            const SizedBox(
+                width: double.infinity,
+                child: CircleAvatar(
+                  radius: 80,
+                )),
+            const SizedBox(height: 16.0),
+            const Text(
+              "Name",
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
-            Text(
-              '20',
-              style: TextStyle(fontSize: 18),
+            const SizedBox(height: 16.0),
+            buildTextFieldWithIcon("Name", Icons.person, (value) {
+              // Validation logic can be added here if needed
+            }),
+            const SizedBox(height: 16.0),
+            const Text(
+              "Age",
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
-            Text(
-              'Male',
-              style: TextStyle(fontSize: 18),
+            const SizedBox(height: 16.0),
+            buildTextFieldWithIcon("Age", Icons.calendar_today, (value) {
+              // Validation logic can be added here if needed
+            }),
+            const SizedBox(height: 16.0),
+            const Text(
+              "Gender",
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
-            Text(
-              '1234567890',
-              style: TextStyle(fontSize: 18),
+            const SizedBox(height: 16.0),
+            buildTextFieldWithIcon("Gender", Icons.person_outline, (value) {
+              // Validation logic can be added here if needed
+            }),
+            const SizedBox(height: 16.0),
+            const Text(
+              "Contact No",
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 16.0),
+            buildTextFieldWithIcon("Contact No", Icons.phone, (value) {
+              // Validation logic can be added here if needed
+            }),
+            const SizedBox(height: 16.0),
+            const Text(
+              "Address",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16.0),
+            buildTextFieldWithIcon("Address", Icons.location_on, (value) {
+              // Validation logic can be added here if needed
+            }),
+            const SizedBox(height: 32.0),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextFieldWithIcon(
+      String labelText, IconData icon, Function(String?) onChanged) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white, // Set background color to white
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: const Offset(0, 2), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: SizedBox(
+          height: 55,
+          child: Row(
+            children: [
+              const SizedBox(width: 8.0),
+              Expanded(
+                child: Text(
+                  labelText,
+                  style: const TextStyle(
+                      color: Colors.black), // Set text color to black
+                ),
+              ),
+              Icon(icon),
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sarthi/features/signup_page/page/signup_page.dart';
+import 'package:sarthi/record_page/screen/privious_record_screen.dart';
 
 var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 void main() {
@@ -9,7 +9,5 @@ void main() {
     DeviceOrientation.portraitUp,
   ]);
 
-  runApp(MaterialApp(
-    home: SignUp(),
-  ));
+  runApp(const MaterialApp(home: PriviousRecord()));
 }
