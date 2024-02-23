@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:sarthi/features/landing/screen/landing_page.dart';
+import 'package:sarthi/features/verify_email/verify_email_screen.dart';
+import 'package:sarthi/services/firebase_services.dart';
 
 class SignUp extends StatelessWidget {
+  SignUp({
+    super.key,
+  });
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late String _email;
   late String _password;
   late String _confirmPassword;
-
-  SignUp({
-    super.key,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,9 @@ class SignUp extends StatelessWidget {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a password';
                 }
+                if (value.length < 6) {
+                  return "Password length can not be less than 6";
+                }
                 return null;
               }),
               const SizedBox(height: 16.0),
@@ -50,7 +55,7 @@ class SignUp extends StatelessWidget {
                 _confirmPassword = value!;
               }, (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter a password';
+                  return 'Please confirm your password password';
                 }
                 if (value != _password) {
                   return 'Passwords do not match';
@@ -77,14 +82,63 @@ class SignUp extends StatelessWidget {
                     "Sign Up",
                     style: TextStyle(fontSize: 18.0, color: Colors.white),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       // Handle sign up logic here
                       // You can access _email and _password variables here
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) {
+                            return const PopScope(
+                              canPop: false,
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          });
+                      var email = _email.trim();
+                      print("email - $email");
+
+                      var res = await FirebaseServices()
+                          .createAccount(email, _password.trim(), context);
+                      if (res == "Success") {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const VerifyEmail()),
+                            (route) => false);
+                      } else {
+                        Navigator.pop(context);
+                      }
                     }
                   },
                 ),
-              )
+              ),
+              const SizedBox(height: 5),
+              const Text('Already have an account ?'),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: double.infinity,
+                height: 44,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Handle register logic here
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (ctx) => LandingPage()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ),
+                  child: const Text(
+                    'LogIn',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

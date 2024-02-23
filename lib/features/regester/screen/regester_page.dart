@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sarthi/features/profile/screen/profile_page.dart';
+import 'package:sarthi/services/firestore_services.dart';
 
 class Register extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  late String name;
+  late String age;
+  late String gender;
+  late String contactNo;
+  late String address;
   Register({super.key});
 
   @override
@@ -19,23 +25,23 @@ class Register extends StatelessWidget {
             children: <Widget>[
               const SizedBox(height: 16.0),
               buildTextFieldWithIcon("Name", Icons.person, (value) {
-                // Validation logic can be added here if needed
+                name = value!;
               }),
               const SizedBox(height: 16.0),
               buildTextFieldWithIcon("Age", Icons.calendar_today, (value) {
-                // Validation logic can be added here if needed
+                age = value!;
               }),
               const SizedBox(height: 16.0),
               buildTextFieldWithIcon("Gender", Icons.person_outline, (value) {
-                // Validation logic can be added here if needed
+                gender = value!;
               }),
               const SizedBox(height: 16.0),
               buildTextFieldWithIcon("Contact No", Icons.phone, (value) {
-                // Validation logic can be added here if needed
+                contactNo = value!;
               }),
               const SizedBox(height: 16.0),
               buildTextFieldWithIcon("Address", Icons.location_on, (value) {
-                // Validation logic can be added here if needed
+                address = value!;
               }),
               const SizedBox(height: 32.0),
               SizedBox(
@@ -57,10 +63,29 @@ class Register extends StatelessWidget {
                     "Register",
                     style: TextStyle(fontSize: 18.0, color: Colors.white),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
                       // Handle registration logic here
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) {
+                            return PopScope(
+                              canPop: false,
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
+                          });
+                      await FirestoreServices()
+                          .addUsersData(name, age, gender, contactNo, address);
+
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ProfilePage()),
+                          (route) => false);
                     }
                   },
                 ),
