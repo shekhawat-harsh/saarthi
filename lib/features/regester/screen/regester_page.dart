@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sarthi/core/screen_binder.dart';
 import 'package:sarthi/core/user_data_provider.dart';
-import 'package:sarthi/features/profile/screen/profile_page.dart';
 import 'package:sarthi/services/firebase_services.dart';
 import 'package:sarthi/services/firestore_services.dart';
 
@@ -92,7 +92,7 @@ class Register extends ConsumerWidget {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfilePage()),
+                              builder: (context) => const ScreenBinder()),
                           (route) => false);
                     }
                   },

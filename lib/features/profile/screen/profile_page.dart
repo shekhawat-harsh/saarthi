@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sarthi/core/user_data_provider.dart';
-import 'package:sarthi/services/firebase_services.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
@@ -10,84 +9,69 @@ class ProfilePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var userData = ref.read(userDataProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile Page'),
-        actions: [
-          IconButton(
-              onPressed: () async {
-                await FirebaseServices().logOut(context);
-              },
-              icon: const Icon(
-                Icons.logout,
-                color: Colors.black,
-              ))
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const SizedBox(
+            height: 16,
+          ),
+          const SizedBox(
+              width: double.infinity,
+              child: CircleAvatar(
+                radius: 80,
+              )),
+          const SizedBox(height: 16.0),
+          const Text(
+            "Name",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16.0),
+          buildTextFieldWithIcon(userData!["Name"], Icons.person, (value) {
+            // Validation logic can be added here if needed
+          }),
+          const SizedBox(height: 16.0),
+          const Text(
+            "Age",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16.0),
+          buildTextFieldWithIcon(userData["Age"], Icons.calendar_today,
+              (value) {
+            // Validation logic can be added here if needed
+          }),
+          const SizedBox(height: 16.0),
+          const Text(
+            "Gender",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16.0),
+          buildTextFieldWithIcon(userData["Gender"], Icons.person_outline,
+              (value) {
+            // Validation logic can be added here if needed
+          }),
+          const SizedBox(height: 16.0),
+          const Text(
+            "Contact No",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16.0),
+          buildTextFieldWithIcon(userData["ContactNo"], Icons.phone, (value) {
+            // Validation logic can be added here if needed
+          }),
+          const SizedBox(height: 16.0),
+          const Text(
+            "Address",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16.0),
+          buildTextFieldWithIcon(userData["Address"], Icons.location_on,
+              (value) {
+            // Validation logic can be added here if needed
+          }),
+          const SizedBox(height: 32.0),
         ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(
-              height: 16,
-            ),
-            const SizedBox(
-                width: double.infinity,
-                child: CircleAvatar(
-                  radius: 80,
-                )),
-            const SizedBox(height: 16.0),
-            const Text(
-              "Name",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16.0),
-            buildTextFieldWithIcon(userData!["Name"], Icons.person, (value) {
-              // Validation logic can be added here if needed
-            }),
-            const SizedBox(height: 16.0),
-            const Text(
-              "Age",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16.0),
-            buildTextFieldWithIcon(userData["Age"], Icons.calendar_today,
-                (value) {
-              // Validation logic can be added here if needed
-            }),
-            const SizedBox(height: 16.0),
-            const Text(
-              "Gender",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16.0),
-            buildTextFieldWithIcon(userData["Gender"], Icons.person_outline,
-                (value) {
-              // Validation logic can be added here if needed
-            }),
-            const SizedBox(height: 16.0),
-            const Text(
-              "Contact No",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16.0),
-            buildTextFieldWithIcon(userData["ContactNo"], Icons.phone, (value) {
-              // Validation logic can be added here if needed
-            }),
-            const SizedBox(height: 16.0),
-            const Text(
-              "Address",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16.0),
-            buildTextFieldWithIcon(userData["Address"], Icons.location_on,
-                (value) {
-              // Validation logic can be added here if needed
-            }),
-            const SizedBox(height: 32.0),
-          ],
-        ),
       ),
     );
   }

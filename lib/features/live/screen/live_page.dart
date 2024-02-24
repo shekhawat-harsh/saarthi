@@ -6,11 +6,8 @@ class LivePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var scWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Live"),
-      ),
-      body: Padding(
+    return SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sarthi/core/screen_binder.dart';
 import 'package:sarthi/core/user_data_provider.dart';
 import 'package:sarthi/features/landing/forget_password.dart';
-import 'package:sarthi/features/profile/screen/profile_page.dart';
-import 'package:sarthi/features/signup/page/signup_page.dart';
+import 'package:sarthi/features/signup/screen/signup_page.dart';
 import 'package:sarthi/services/firebase_services.dart';
 import 'package:sarthi/services/firestore_services.dart';
 
@@ -71,10 +71,14 @@ class LandingPage extends ConsumerWidget {
                               await FirestoreServices()
                                   .getUserByEmail(_emailController.text.trim());
 
+                          ref.read(userDataProvider.notifier).state =
+                              await FirestoreServices()
+                                  .getUserByEmail(_emailController.text.trim());
+
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ProfilePage(),
+                                builder: (context) => const ScreenBinder(),
                               ),
                               (route) => false);
                         } else {

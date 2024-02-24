@@ -5,8 +5,6 @@ class PriviousRecord extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text(" No Privious Records ! ")),
-    );
+    return const Center(child: Text(" No Privious Records ! "));
   }
 }
