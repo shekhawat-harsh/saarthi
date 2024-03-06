@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
-import 'package:sarthi/features/regester_page/screen/regester_page.dart';
-import 'package:sarthi/features/signup_page/page/signup_page.dart';
+import 'package:sarthi/features/regester/screen/regester_page.dart';
+import 'package:sarthi/features/signup/screen/signup_page.dart';
 
 class VerifyEmail extends StatefulWidget {
   const VerifyEmail({super.key});

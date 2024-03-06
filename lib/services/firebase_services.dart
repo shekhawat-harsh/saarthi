@@ -1,9 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sarthi/features/landing_page/screen/landing_page.dart';
+import 'package:sarthi/features/landing/screen/landing_page.dart';
 
 class FirebaseServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  String? getUserEmail() {
+    if (_auth.currentUser != null) {
+      return _auth.currentUser!.email;
+    } else {
+      return null;
+    }
+  }
 
   Future<String?> createAccount(
       String email, String password, BuildContext context) async {
