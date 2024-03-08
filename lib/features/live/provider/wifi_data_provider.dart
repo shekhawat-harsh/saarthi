@@ -1,18 +1,18 @@
 import 'dart:convert';
 
 import 'package:riverpod/riverpod.dart';
+import 'package:sarthi/main.dart';
 import 'dart:io';
 
 import 'package:sarthi/models/wifi_model.dart';
 
 final socketProvider = StateProvider<Wifi_data?>((ref) => null);
-final socketDataProvider = StateProvider((ref) async {
-  final socket =
-      await Socket.connect('192.168.179.98', 8080); // Example socket connection
+final socketDataProvider = FutureProvider((ref) async {
   var buffer = '';
-  print('connecting..');
+
   socket.listen(
     (List<int> event) {
+      print("----------------listening---------------");
       final data = utf8.decode(event); // Decode incoming bytes to string
       buffer += data; // Append the received data to the buffer
 
@@ -24,13 +24,10 @@ final socketDataProvider = StateProvider((ref) async {
         // Parse the JSON string
         try {
           final jsonMap = json.decode(jsonString);
-          //  setState(() {
-          //     wifi_data = Wifi_data.fromJson(jsonMap);
-          //  });
-         
-          ref.watch(socketProvider.notifier).state = Wifi_data.fromJson(jsonMap);   
-          
-          
+
+          ref.watch(socketProvider.notifier).state =
+              Wifi_data.fromJson(jsonMap);
+
           print('Received JSON: $jsonMap');
         } catch (e) {
           print('Error parsing JSON: $e');
@@ -40,5 +37,5 @@ final socketDataProvider = StateProvider((ref) async {
         buffer = buffer.substring(newlineIndex + 1);
       }
     },
-  ).onData((data) {});
+  );
 });

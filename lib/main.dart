@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +12,13 @@ import 'package:sarthi/features/verify_email/verify_email_screen.dart';
 import 'package:sarthi/firebase_options.dart';
 
 var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
+var socket;
 void main() async {
   Map<String, dynamic>? userData;
-
+    print('--------------------connecting--------------------');
+ 
+   socket =
+      await Socket.connect('172.20.10.4', 8080); // Example socket connection
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
