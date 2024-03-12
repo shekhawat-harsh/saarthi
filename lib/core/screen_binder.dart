@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:sarthi/features/live/screen/live_page.dart';
+import 'package:sarthi/features/privious_records/screen/privious_record_screen.dart';
 import 'package:sarthi/features/profile/screen/profile_page.dart';
-import 'package:sarthi/features/record/screen/privious_record_screen.dart';
 import 'package:sarthi/services/firebase_services.dart';
 
 class ScreenBinder extends StatefulWidget {

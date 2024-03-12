@@ -29,6 +29,9 @@ class _LiveChartState extends State<LiveChart> {
         series: [
           LineSeries<LiveData, int>(
             dataSource: chartData,
+            onRendererCreated: (controller) {
+              _chartSeriesController = controller;
+            },
             xValueMapper: (LiveData datum, int index) {
               return datum.time;
             },
@@ -60,6 +63,8 @@ class _LiveChartState extends State<LiveChart> {
     Map<String, dynamic> data = jsonDecode(jsonData);
     int timeInSeconds = Timeline.now;
     double value = data[widget.value];
+    _chartSeriesController.updateDataSource(
+        addedDataIndex: chartData.length - 1, removedDataIndex: 0);
 
     setState(() {
       chartData.removeAt(0);
