@@ -22,7 +22,7 @@ class SQLHelper {
 
   // Create new item (wifi_data)
   static Future<int> createItem(
-      double? acc1, Map<String, dynamic> wifi_data) async {
+      double? acc1, Map<String, dynamic> wifiData) async {
     final db = await SQLHelper.db();
 
     final data = {'acc1': acc1};
