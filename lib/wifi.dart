@@ -2,11 +2,11 @@
 // import 'dart:io';
 
 // void main() async {
-//   print("----------connetiong----");
+//   print("----------connecting------------");
 //   final socket =
-//       await Socket.connect('172.20.10.4', 8080); // Example socket connection
+//       await Socket.connect('192.168.80.98', 8080); // Example socket connection
 //   var buffer = '';
-//   print("----------connected-- ");
+//   print("----------connected------------ ");
 //   socket.listen(
 //     (List<int> event) {
 //       final data = utf8.decode(event); // Decode incoming bytes to string

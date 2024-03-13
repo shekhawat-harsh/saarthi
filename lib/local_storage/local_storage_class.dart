@@ -1,5 +1,3 @@
-
-import 'package:sarthi/models/wifi_model.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 class SQLHelper {
@@ -23,19 +21,21 @@ class SQLHelper {
   }
 
   // Create new item (wifi_data)
-  static Future<int> createItem(double? acc1 , Map< String, dynamic> wifi_data) async {
+  static Future<int> createItem(
+      double? acc1, Map<String, dynamic> wifiData) async {
     final db = await SQLHelper.db();
-   
-    final data = { 'acc1' : acc1};
-    final id = await db.insert('items', data,
-        // conflictAlgorithm: sql.ConflictAlgorithm.replace
-        );
+
+    final data = {'acc1': acc1};
+    final id = await db.insert(
+      'items', data,
+      // conflictAlgorithm: sql.ConflictAlgorithm.replace
+    );
     return id;
   }
+
   // Read all items (wifi_data)
   static Future<List<Map<String, dynamic>>> getItems() async {
     final db = await SQLHelper.db();
     return db.query('items', orderBy: "id");
   }
-
 }
