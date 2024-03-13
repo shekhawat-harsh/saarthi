@@ -15,10 +15,10 @@ var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 var socket;
 void main() async {
   Map<String, dynamic>? userData;
-    print('--------------------connecting--------------------');
- 
-   socket =
-      await Socket.connect('172.20.10.4', 8080); // Example socket connection
+  print('--------------------connecting--------------------');
+
+  socket =
+      await Socket.connect('192.168.80.98', 8080); // Example socket connection
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

@@ -1,21 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sarthi/features/pressure_map/data/pressure_point.dart';
 
-class PressureMap extends StatelessWidget {
-  const PressureMap({super.key});
+class PressureMap extends ConsumerWidget {
+  PressureMap({super.key, required this.pressurePoints});
 
+  List<PressurePoint> pressurePoints;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Simulated pressure data (sampled from sensors on the foot)
-    List<PressurePoint> pressurePoints = [
-      const PressurePoint(0, 0, 0.2),
-      const PressurePoint(0, 1, 0.3),
-      const PressurePoint(1, 0, 0.5),
-      const PressurePoint(1, 1, 0.8),
-
-      // Add more pressure points here...
-    ];
 
     // Define grid points covering the rectangle
     List<Offset> gridPoints = [];
@@ -129,12 +124,4 @@ class PressurePainter extends CustomPainter {
       return Color.fromARGB(255, red, green, 0);
     }
   }
-}
-
-class PressurePoint {
-  final double x;
-  final double y;
-  final double pressure;
-
-  const PressurePoint(this.x, this.y, this.pressure);
 }
