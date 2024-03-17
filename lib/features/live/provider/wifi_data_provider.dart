@@ -1,11 +1,17 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:riverpod/riverpod.dart';
 import 'package:sarthi/core/models/wifi_model.dart';
-import 'package:sarthi/main.dart';
 
+List<Wifi_data?> wifi_dataList = [];
 final socketProvider = StateProvider<Wifi_data?>((ref) => null);
 final socketDataProvider = FutureProvider((ref) async {
+  print('--------------------connecting--------------------');
+
+  var socket =
+      await Socket.connect('192.168.80.98', 8080); // Example socket connection
+
+  print('----------------connected---------------');
   var buffer = '';
 
   socket.listen(
@@ -18,11 +24,12 @@ final socketDataProvider = FutureProvider((ref) async {
       while (buffer.contains(' ')) {
         final newlineIndex = buffer.indexOf('\n');
         final jsonString = buffer.substring(0, newlineIndex);
+        print(jsonString);
 
         // Parse the JSON string
         try {
           final jsonMap = json.decode(jsonString);
-
+          // wifi_dataList.add(jsonMap);
           ref.watch(socketProvider.notifier).state =
               Wifi_data.fromJson(jsonMap);
 

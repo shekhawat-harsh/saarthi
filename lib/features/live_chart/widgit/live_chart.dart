@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sarthi/features/live_chart/data/live_data.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -24,23 +25,28 @@ class _LiveChartState extends State<LiveChart> {
   late ChartSeriesController _chartSeriesController;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SfCartesianChart(
-        series: [
-          LineSeries<LiveData, int>(
-            dataSource: chartData,
-            onRendererCreated: (controller) {
-              _chartSeriesController = controller;
-            },
-            xValueMapper: (LiveData datum, int index) {
-              return datum.time;
-            },
-            yValueMapper: (LiveData datum, int index) {
-              return datum.value;
-            },
-          )
-        ],
-      ),
+    return Consumer(
+      builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        
+        return Container(
+          child: SfCartesianChart(
+            series: [
+              LineSeries<LiveData, int>(
+                dataSource: chartData,
+                onRendererCreated: (controller) {
+                  _chartSeriesController = controller;
+                },
+                xValueMapper: (LiveData datum, int index) {
+                  return datum.time;
+                },
+                yValueMapper: (LiveData datum, int index) {
+                  return datum.value;
+                },
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 
