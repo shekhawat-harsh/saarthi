@@ -10,7 +10,7 @@ final socketDataProvider = FutureProvider((ref) async {
   print('--------------------connecting--------------------');
 
   var socket =
-      await Socket.connect('192.168.118.98', 8080); // Example socket connection
+      await Socket.connect('192.168.118.98', 8080); //  socket connection
 
   print('----------------connected---------------');
   var buffer = '';

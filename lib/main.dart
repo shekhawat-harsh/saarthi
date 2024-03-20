@@ -1,5 +1,3 @@
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sarthi/core/splash_screen.dart';
 import 'package:sarthi/core/user_data_provider.dart';
 import 'package:sarthi/features/landing/screen/landing_page.dart';
-
 import 'package:sarthi/features/verify_email/verify_email_screen.dart';
 import 'package:sarthi/firebase_options.dart';
 

@@ -33,9 +33,6 @@ class _LivePageState extends State<LivePage> {
             if (wifiData != null) {
               // values required for pressuremap
 
-              int pixelX = 100; // Number of points in x-axis
-              int pixelY = 100; // Number of points in y-axis
-
               return Column(
                 children: [
                   const SizedBox(
