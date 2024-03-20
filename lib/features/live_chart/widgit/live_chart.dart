@@ -1,14 +1,15 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sarthi/core/models/wifi_model.dart';
+import 'package:sarthi/features/live/provider/wifi_data_provider.dart';
 import 'package:sarthi/features/live_chart/data/live_data.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class LiveChart extends StatefulWidget {
-  const LiveChart({super.key, required this.value});
-  final String value;
+  const LiveChart({super.key, required this.ivalue});
+  final String ivalue;
   @override
   State<LiveChart> createState() => _LiveChartState();
 }
@@ -19,7 +20,14 @@ class _LiveChartState extends State<LiveChart> {
     // TODO: implement initState
     super.initState();
     chartData = getChartData();
+    // Timer.periodic(Duration(milliseconds: 10), (timer) {
+
+    //   updateDataSource();
+
+    // });
   }
+
+  num? value;
 
   late List<LiveData> chartData;
   late ChartSeriesController _chartSeriesController;
@@ -27,7 +35,12 @@ class _LiveChartState extends State<LiveChart> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (BuildContext context, WidgetRef ref, Widget? child) {
-        
+        Wifi_data? wifiData = ref.watch(socketProvider);
+        if (wifiData != null) {
+          // String dataValue =  widget.value;
+          //to change later
+          value = wifiData.aAcc1;
+        }
         return Container(
           child: SfCartesianChart(
             series: [
@@ -65,16 +78,15 @@ class _LiveChartState extends State<LiveChart> {
     ];
   }
 
-  void updateDataSource(String jsonData) {
-    Map<String, dynamic> data = jsonDecode(jsonData);
+  void updateDataSource(Map<String, dynamic> data) {
     int timeInSeconds = Timeline.now;
-    double value = data[widget.value];
+    double valuedata = data[value.toString()];
     _chartSeriesController.updateDataSource(
         addedDataIndex: chartData.length - 1, removedDataIndex: 0);
 
     setState(() {
       chartData.removeAt(0);
-      chartData.add(LiveData(time: timeInSeconds, value: value));
+      chartData.add(LiveData(time: timeInSeconds, value: valuedata));
     });
   }
 }

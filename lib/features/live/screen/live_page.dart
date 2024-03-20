@@ -1,10 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sarthi/core/models/wifi_model.dart';
 import 'package:sarthi/features/live/provider/wifi_data_provider.dart';
+import 'package:sarthi/features/live/screen/fott_detail.dart';
 
 class LivePage extends StatefulWidget {
   const LivePage({super.key});
@@ -14,47 +12,6 @@ class LivePage extends StatefulWidget {
 }
 
 class _LivePageState extends State<LivePage> {
-  void socketConnectionData() async {
-    final socket = await Socket.connect(
-        '192.168.179.98', 8080); // Example socket connection
-    var buffer = '';
-    print('connection..');
-    socket.listen(
-      (List<int> event) {
-        final data = utf8.decode(event); // Decode incoming bytes to string
-        buffer += data; // Append the received data to the buffer
-
-        // Continuously parse complete JSON objects from the buffer
-        while (buffer.contains(' ')) {
-          final newlineIndex = buffer.indexOf('\n');
-          final jsonString = buffer.substring(0, newlineIndex);
-
-          // Parse the JSON string
-          try {
-            final jsonMap = json.decode(jsonString);
-            //  setState(() {
-            //     wifi_data = Wifi_data.fromJson(jsonMap);
-            //  });
-            // context.read(socketProvider).state = Wifi_data.fromJson(jsonMap);
-            print('Received JSON: $jsonMap');
-          } catch (e) {
-            print('Error parsing JSON: $e');
-          }
-
-          // Remove the parsed JSON object from the buffer
-          buffer = buffer.substring(newlineIndex + 1);
-        }
-      },
-      onError: (error) {
-        print('Socket error: $error');
-      },
-      onDone: () {
-        print('Socket closed');
-        socket.destroy();
-      },
-    );
-  }
-
   @override
   void initState() {
     // socketConnectionData();
@@ -71,43 +28,20 @@ class _LivePageState extends State<LivePage> {
           builder: (BuildContext context, WidgetRef ref, Widget? child) {
             Wifi_data? wifiData = ref.watch(socketProvider);
             var res = ref.watch(socketDataProvider);
-            Wifi_data? wifiData = ref.watch(socketProvider);
             print("--------socket data------------------");
             // print(wifiData!.aAcc1 ?? "..");
             if (wifiData != null) {
+              // values required for pressuremap
+
+              int pixelX = 100; // Number of points in x-axis
+              int pixelY = 100; // Number of points in y-axis
+
               return Column(
-                children: <Widget>[
+                children: [
                   const SizedBox(
                     height: 80,
                   ),
-                  Row(
-                    children: [
-                      PressureMap(pressurePoints: [
-                        PressurePoint(
-                            1, 1, double.tryParse(wifiData.aAcc1.toString())!),
-                        PressurePoint(0.99, 0.33,
-                            double.tryParse(wifiData.aAcc2.toString())!),
-                        PressurePoint(0.12, 0.23,
-                            double.tryParse(wifiData.bAcc1.toString())!),
-                        PressurePoint(0.15, 0.56,
-                            double.tryParse(wifiData.bAngle2.toString())!),
-                        PressurePoint(0.11, 0.78,
-                            double.tryParse(wifiData.aAcc3.toString())!),
-                        PressurePoint(0.89, 0.34,
-                            double.tryParse(wifiData.bAcc1.toString())!),
-                        PressurePoint(0.90, 0.34,
-                            double.tryParse(wifiData.bAcc2.toString())!),
-                        PressurePoint(0.67, 0.89,
-                            double.tryParse(wifiData.bAcc3.toString())!),
-                        PressurePoint(0.89, 0.76,
-                            double.tryParse(wifiData.fSR9.toString())!),
-                        PressurePoint(0.34, 0.67,
-                            double.tryParse(wifiData.fSR5.toString())!),
-                        PressurePoint(0.23, 0.89,
-                            double.tryParse(wifiData.fSR7.toString())!)
-                      ]),
-                    ],
-                  ),
+                  const FootDetailPointsScreen(),
                   const SizedBox(
                     height: 160,
                   ),
@@ -289,7 +223,6 @@ class _LivePageState extends State<LivePage> {
     );
   }
 }
-
 
 // import 'dart:convert';
 // import 'dart:io';

@@ -11,11 +11,13 @@ class LiveChartPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          LiveChart(value: value1),
+          LiveChart(
+            ivalue: value1,
+          ),
           const SizedBox(
             height: 24,
           ),
-          LiveChart(value: value2)
+          LiveChart(ivalue: value2)
         ],
       ),
     );

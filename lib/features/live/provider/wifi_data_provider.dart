@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:riverpod/riverpod.dart';
 import 'package:sarthi/core/models/wifi_model.dart';
 
@@ -9,7 +10,7 @@ final socketDataProvider = FutureProvider((ref) async {
   print('--------------------connecting--------------------');
 
   var socket =
-      await Socket.connect('192.168.80.98', 8080); // Example socket connection
+      await Socket.connect('192.168.118.98', 8080); // Example socket connection
 
   print('----------------connected---------------');
   var buffer = '';
